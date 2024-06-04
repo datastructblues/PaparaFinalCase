@@ -1,10 +1,11 @@
-import com.android.build.api.variant.BuildConfigField
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -35,7 +36,12 @@ android {
                 "proguard-rules.pro"
             )
 
-            BuildConfigField("String", "BASE_URL", "https://api.spoonacular.com/")
+            val p = Properties()
+            p.load(project.rootProject.file("local.properties").reader())
+            val key: String = p.getProperty("API_KEY")
+            buildConfigField("String", "API_KEY", "\"$key\"")
+
+            buildConfigField("String", "BASE_URL", "\"https://api.spoonacular.com\"")
         }
         release {
             isMinifyEnabled = true
@@ -46,7 +52,12 @@ android {
                 "proguard-rules.pro"
             )
 
-            BuildConfigField("String", "BASE_URL", "https://api.spoonacular.com/")
+            val p = Properties()
+            p.load(project.rootProject.file("local.properties").reader())
+            val key: String = p.getProperty("API_KEY")
+            buildConfigField("String", "API_KEY", "\"$key\"")
+
+            buildConfigField("String", "BASE_URL", "\"https://api.spoonacular.com\"")
         }
     }
     compileOptions {
@@ -58,6 +69,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -90,4 +102,16 @@ dependencies {
     // Dagger-Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+    // Retrofit
+    implementation (libs.converter.gson)
+    implementation (libs.retrofit)
+
+    // Leak Canary
+    debugImplementation(libs.leakcanary.android)
+
+    // Lifecycle
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 }
