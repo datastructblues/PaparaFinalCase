@@ -1,12 +1,11 @@
 package com.example.recipeappfinalcase.di
 
-import android.app.Application
-import android.content.Context
-import com.example.recipeappfinalcase.data.source.network.NetworkConnectionInterceptor
+import com.example.recipeappfinalcase.data.source.network.NetworkDataSource
+import com.example.recipeappfinalcase.data.source.network.RecipeNetworkDataSource
+import com.example.recipeappfinalcase.data.source.network.RecipeService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -20,9 +19,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(@ApplicationContext context: Context): OkHttpClient {
+    fun provideHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(NetworkConnectionInterceptor(context))
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
             .build()
@@ -39,4 +37,11 @@ object NetworkModule {
 
         return retrofit.create(T::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideRemoteDataSource(recipeService: RecipeService): NetworkDataSource {
+        return RecipeNetworkDataSource(recipeService)
+    }
+
 }

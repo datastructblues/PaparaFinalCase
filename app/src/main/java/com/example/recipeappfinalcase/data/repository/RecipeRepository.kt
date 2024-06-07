@@ -1,13 +1,11 @@
 package com.example.recipeappfinalcase.data.repository
 
-import com.example.recipeappfinalcase.data.source.network.RecipeNetworkDataSource
-import javax.inject.Inject
+import com.example.recipeappfinalcase.data.model.RecipeResponse
+import com.example.recipeappfinalcase.data.source.network.NetworkState
+import kotlinx.coroutines.flow.Flow
 
-class RecipeRepository @Inject constructor(
-    private val recipeNetworkDataSource: RecipeNetworkDataSource
-){
+interface RecipeRepository {
 
-    suspend fun getRecipes(number: Int, offset: Int) = recipeNetworkDataSource.getRecipes(number, offset)
-
-    suspend fun getMealDetails(id: Int) = recipeNetworkDataSource.getMealDetails(id)
+    suspend fun getRecipes(number: Int, offset: Int) : Flow<NetworkState<RecipeResponse>>
+    suspend fun getMealDetails(id: Int) : Any
 }
