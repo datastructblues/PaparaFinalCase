@@ -1,0 +1,19 @@
+package com.example.recipeappfinalcase.data.model.detail
+
+
+import com.google.gson.annotations.SerializedName
+
+data class Nutrition(
+    @SerializedName("caloricBreakdown")
+    val caloricBreakdown: CaloricBreakdown,
+    @SerializedName("flavonoids")
+    val flavonoids: List<Flavonoid>,
+    @SerializedName("ingredients")
+    val ingredients: List<Ingredient>,
+    @SerializedName("nutrients")
+    val nutrients: List<NutrientX>,
+    @SerializedName("properties")
+    val properties: List<Property>,
+    @SerializedName("weightPerServing")
+    val weightPerServing: WeightPerServing
+)

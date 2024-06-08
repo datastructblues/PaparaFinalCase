@@ -1,4 +1,4 @@
-package com.example.recipeappfinalcase.feature.ui.components
+package com.example.recipeappfinalcase.feature.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

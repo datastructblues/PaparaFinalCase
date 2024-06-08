@@ -2,8 +2,10 @@ package com.example.recipeappfinalcase.data.source.network
 
 import com.example.recipeappfinalcase.BuildConfig
 import com.example.recipeappfinalcase.data.model.RecipeResponse
+import com.example.recipeappfinalcase.data.model.detail.DetailResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RecipeService {
@@ -18,5 +20,11 @@ interface RecipeService {
         @Query("type") type: String? = null,
         @Query("apiKey") apiKey: String = BuildConfig.API_KEY
     ): Response<RecipeResponse>
+
+    @GET("recipes/{id}/information")
+    suspend fun getMealDetails(
+        @Path("id") id: Int,
+        @Query("apiKey") apiKey: String = BuildConfig.API_KEY
+    ) : Response<DetailResponse>
 
 }

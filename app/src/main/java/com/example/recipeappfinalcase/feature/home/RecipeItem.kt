@@ -1,4 +1,4 @@
-package com.example.recipeappfinalcase.feature.ui.components
+package com.example.recipeappfinalcase.feature.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

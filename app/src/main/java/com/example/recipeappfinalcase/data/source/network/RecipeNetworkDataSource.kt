@@ -2,6 +2,7 @@ package com.example.recipeappfinalcase.data.source.network
 
 import com.example.recipeappfinalcase.data.apiFlow
 import com.example.recipeappfinalcase.data.model.RecipeResponse
+import com.example.recipeappfinalcase.data.model.detail.DetailResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -15,8 +16,8 @@ class RecipeNetworkDataSource @Inject constructor(
     }
 
 
+    override suspend fun getMealDetails(id: Int): Flow<NetworkState<DetailResponse>> = apiFlow {
+        recipeService.getMealDetails(id)
 
-    override suspend fun getMealDetails(id: Int): Any {
-        TODO()
     }
 }

@@ -1,6 +1,7 @@
 package com.example.recipeappfinalcase.data.repository
 
 import com.example.recipeappfinalcase.data.model.RecipeResponse
+import com.example.recipeappfinalcase.data.model.detail.DetailResponse
 import com.example.recipeappfinalcase.data.source.network.NetworkDataSource
 import com.example.recipeappfinalcase.data.source.network.NetworkState
 import kotlinx.coroutines.flow.Flow
@@ -24,8 +25,7 @@ class RecipeRepositoryImpl @Inject constructor(
         return recipeResponse
     }
 
-    override suspend fun getMealDetails(id: Int): Any {
-        TODO("Not yet implemented")
+    override suspend fun getRecipeDetails(id: Int): Flow<NetworkState<DetailResponse>> {
+        return networkDataSource.getMealDetails(id)
     }
-
 }
