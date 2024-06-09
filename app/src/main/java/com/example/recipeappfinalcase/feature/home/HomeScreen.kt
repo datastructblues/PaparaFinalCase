@@ -14,13 +14,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.recipeappfinalcase.feature.navigation.Screen
+import com.example.recipeappfinalcase.feature.ui.components.LoadingComponent
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,19 +55,15 @@ fun HomeScreen(
             contentAlignment = Alignment.Center,
         ){
             if (state.value.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.padding(16.dp),
-                    color = Color.White,
-                    strokeWidth = 2.dp,
-                    trackColor = Color.Gray
-                )
+                LoadingComponent()
+            }else{
+                ListingComponent(
+                    paddingValues = paddingValues,
+                    recipes = state.value.recipes?.recipeList ?: emptyList(),
+                ) { recipeId ->
+                    navController.navigate(Screen.Detail.createRoute(recipeId))
+                }
             }
-            ListingComponent(
-                paddingValues = paddingValues,
-                recipes = state.value.recipes?.recipeList ?: emptyList(),
-            ) { recipeId ->
-                navController.navigate(Screen.Detail.createRoute(recipeId))
-            }
-
         }
 
     }
