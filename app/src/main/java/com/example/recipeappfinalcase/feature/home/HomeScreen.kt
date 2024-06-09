@@ -52,10 +52,8 @@ fun HomeScreen(
         }
     ) { paddingValues ->
         Box(
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier,
             contentAlignment = Alignment.Center,
-
-
         ){
             if (state.value.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.padding(16.dp),
@@ -63,8 +61,6 @@ fun HomeScreen(
                     strokeWidth = 2.dp,
                     trackColor = Color.Gray
                 )
-            }else{
-
             }
             ListingComponent(
                 paddingValues = paddingValues,

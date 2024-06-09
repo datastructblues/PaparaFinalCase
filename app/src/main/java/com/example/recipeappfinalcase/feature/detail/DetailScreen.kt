@@ -60,7 +60,6 @@ fun DetailScreen(
                 DetailComponent(paddingValues, recipe)
             }
         }
-
     }
 }
 
