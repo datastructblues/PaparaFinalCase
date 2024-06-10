@@ -10,8 +10,16 @@ import javax.inject.Inject
 class RecipeRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource
 ) : RecipeRepository {
-    override suspend fun getRecipes(number: Int, offset: Int): Flow<NetworkState<RecipeResponse>> {
-       val recipeResponse = networkDataSource.getRecipes(number, offset)
+
+    override suspend fun getRecipes(
+        number: Int,
+        offset: Int,
+        query: String?,
+        cuisine: String?,
+        diet: String?,
+        type: String?
+    ): Flow<NetworkState<RecipeResponse>> {
+        val recipeResponse = networkDataSource.getRecipes(number, offset, query, cuisine, diet, type)
         recipeResponse.collect { value ->
             when (value) {
                 is NetworkState.Success -> {

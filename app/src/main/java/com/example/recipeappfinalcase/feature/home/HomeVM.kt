@@ -7,6 +7,9 @@ import com.example.recipeappfinalcase.data.source.network.NetworkState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,14 +22,29 @@ class HomeVM @Inject constructor(
     private val _uiState = MutableStateFlow(HomeState())
     val uiState: StateFlow<HomeState> = _uiState
 
-    fun fetchRecipes() {
+    val query = MutableStateFlow("")
+
+
+    init {
+        viewModelScope.launch {
+            query
+                .debounce(1000L)
+                .filter { it.isNotEmpty() }
+                .distinctUntilChanged()
+                .collect { fetchRecipes(it) }
+        }
+    }
+
+    fun fetchRecipes(
+        query: String? = null
+    ) {
         val internetOnline = true
         viewModelScope.launch {
             _uiState.update { state ->
                 state.copy(isLoading = true)
             }
             if (internetOnline) {
-                repository.getRecipes(10, 0).collect { networkState ->
+                repository.getRecipes(10, 0,query).collect { networkState ->
                     _uiState.update { state ->
                         when (networkState) {
                             is NetworkState.Loading -> state.copy(isLoading = true)

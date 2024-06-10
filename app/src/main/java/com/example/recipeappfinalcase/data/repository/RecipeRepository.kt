@@ -7,6 +7,14 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
 
-    suspend fun getRecipes(number: Int, offset: Int) : Flow<NetworkState<RecipeResponse>>
+    suspend fun getRecipes(
+        number: Int,
+        offset: Int,
+        query: String?=null,
+        cuisine: String?=null,
+        diet: String?=null,
+        type: String?=null
+    ) : Flow<NetworkState<RecipeResponse>>
+
     suspend fun getRecipeDetails(id: Int) : Flow<NetworkState<DetailResponse>>
 }

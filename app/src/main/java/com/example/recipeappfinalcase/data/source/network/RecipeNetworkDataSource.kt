@@ -11,9 +11,17 @@ class RecipeNetworkDataSource @Inject constructor(
     private val recipeService: RecipeService
 ) : NetworkDataSource {
 
-    override suspend fun getRecipes(number: Int, offset: Int): Flow<NetworkState<RecipeResponse>> = apiFlow {
-        recipeService.getRecipes(number, offset)
-    }
+    override suspend fun getRecipes(
+        number: Int,
+        offset: Int,
+        query: String?,
+        cuisine: String?,
+        diet: String?,
+        type: String?,
+    ): Flow<NetworkState<RecipeResponse>> =
+        apiFlow {
+            recipeService.getRecipes(number, offset, query, cuisine, diet, type)
+        }
 
 
     override suspend fun getMealDetails(id: Int): Flow<NetworkState<DetailResponse>> = apiFlow {

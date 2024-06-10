@@ -20,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.recipeappfinalcase.feature.navigation.Screen
 import com.example.recipeappfinalcase.feature.ui.components.LoadingComponent
+import com.example.recipeappfinalcase.feature.ui.components.Searchbar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,19 +30,21 @@ fun HomeScreen(
     viewModel: HomeVM = hiltViewModel(),
 ) {
     val state = viewModel.uiState.collectAsState()
+    val query = viewModel.query.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.fetchRecipes()
+        viewModel.fetchRecipes(query.value)
     }
 
     Scaffold(
         topBar = {
             TopAppBar(title = {
                 Text(text = "Home")
+                Searchbar(query = query, viewModel = viewModel)
             },
                 actions = {
                     TextButton(onClick = {
-                        viewModel.fetchRecipes()
+                        viewModel.fetchRecipes(query.value)
                     }) {
                         Text(text = "Refresh")
                     }
