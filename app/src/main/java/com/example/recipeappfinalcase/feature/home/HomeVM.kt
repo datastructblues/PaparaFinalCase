@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.recipeappfinalcase.data.repository.RecipeRepository
 import com.example.recipeappfinalcase.data.source.network.NetworkState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class HomeVM @Inject constructor(
     private val repository: RecipeRepository,
@@ -23,6 +25,7 @@ class HomeVM @Inject constructor(
     val uiState: StateFlow<HomeState> = _uiState
 
     val query = MutableStateFlow("")
+    val cuisine = MutableStateFlow<String?>(null)
 
 
     init {
@@ -36,7 +39,8 @@ class HomeVM @Inject constructor(
     }
 
     fun fetchRecipes(
-        query: String? = null
+        query: String? = null,
+        cuisine: String? = null,
     ) {
         val internetOnline = true
         viewModelScope.launch {
@@ -44,7 +48,7 @@ class HomeVM @Inject constructor(
                 state.copy(isLoading = true)
             }
             if (internetOnline) {
-                repository.getRecipes(10, 0,query).collect { networkState ->
+                repository.getRecipes(10, 0,query, cuisine).collect { networkState ->
                     _uiState.update { state ->
                         when (networkState) {
                             is NetworkState.Loading -> state.copy(isLoading = true)
