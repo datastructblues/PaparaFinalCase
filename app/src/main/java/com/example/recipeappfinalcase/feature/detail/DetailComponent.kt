@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.recipeappfinalcase.data.model.detail.DetailResponse
 import com.example.recipeappfinalcase.utils.parallaxLayoutModifier
+import com.example.recipeappfinalcase.utils.parseToText
 import kotlin.math.min
 
 
@@ -25,7 +26,7 @@ fun DetailComponent(
     paddingValues: PaddingValues,
     recipe: DetailResponse,
 ) {
-    var scrollState = rememberScrollState()
+    val scrollState = rememberScrollState()
         Column(
         modifier = Modifier
             .padding(paddingValues)
@@ -48,9 +49,10 @@ fun DetailComponent(
             modifier = Modifier.padding(top = 16.dp)
         )
         Text(
-            text = recipe.instructions.repeat(10),
+            text = recipe.instructions.parseToText(),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(top = 8.dp)
         )
+            println(recipe.instructions)
     }
 }

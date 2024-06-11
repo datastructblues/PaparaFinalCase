@@ -1,8 +1,11 @@
 package com.example.recipeappfinalcase.utils
 
+import android.text.Html
 import androidx.compose.foundation.ScrollState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 
 fun Modifier.parallaxLayoutModifier(scrollState: ScrollState, rate: Int) =
     layout { measurable, constraints ->
@@ -12,3 +15,19 @@ fun Modifier.parallaxLayoutModifier(scrollState: ScrollState, rate: Int) =
             placeable.place(0, height)
         }
     }
+
+fun String.parseToText(): String {
+    val textWithoutHtml = Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY).toString()
+
+    val formattedText = StringBuilder()
+    textWithoutHtml.split("\n").forEach { line ->
+        val formattedLine = if (line.startsWith("*")) {
+            "<b>$line</b>"
+        } else {
+            line
+        }
+        formattedText.appendLine(formattedLine)
+    }
+
+    return formattedText.toString()
+}
