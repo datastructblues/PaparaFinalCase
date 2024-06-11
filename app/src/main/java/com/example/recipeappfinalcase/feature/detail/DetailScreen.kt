@@ -2,6 +2,7 @@ package com.example.recipeappfinalcase.feature.detail
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,6 +33,11 @@ fun DetailScreen(
                     // title
                     Text(text = uiState.value.recipe?.title ?: "Recipe Detail")
                 },
+                actions = {
+                    IconButton(onClick = { viewModel.addRecipeToFavorites() }) {
+                        Icon(Icons.Default.Favorite, contentDescription = "Add to Favorites")
+                    }
+                },
                 navigationIcon = {
                     // back icon button
                     // back icon button
@@ -45,15 +51,11 @@ fun DetailScreen(
     )
     { paddingValues ->
         if (uiState.value.isLoading) {
-            // Loading state
-            //
             println("Loading")
         } else if (uiState.value.isError) {
-            // Error state
             println("Error")
             Text("An error occurred")
         } else {
-            // Success state
             println("Success")
             uiState.value.recipe?.let { recipe ->
                 println(recipe.title)

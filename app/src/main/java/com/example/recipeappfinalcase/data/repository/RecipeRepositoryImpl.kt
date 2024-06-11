@@ -2,13 +2,16 @@ package com.example.recipeappfinalcase.data.repository
 
 import com.example.recipeappfinalcase.data.model.RecipeResponse
 import com.example.recipeappfinalcase.data.model.detail.DetailResponse
+import com.example.recipeappfinalcase.data.source.local.FavoriteRecipe
+import com.example.recipeappfinalcase.data.source.local.RecipeDao
 import com.example.recipeappfinalcase.data.source.network.NetworkDataSource
 import com.example.recipeappfinalcase.data.source.network.NetworkState
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RecipeRepositoryImpl @Inject constructor(
-    private val networkDataSource: NetworkDataSource
+    private val networkDataSource: NetworkDataSource,
+    private val localDataSource: RecipeDao,
 ) : RecipeRepository {
 
     override suspend fun getRecipes(
@@ -35,5 +38,17 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun getRecipeDetails(id: Int): Flow<NetworkState<DetailResponse>> {
         return networkDataSource.getMealDetails(id)
+    }
+
+    override suspend fun getFavoriteRecipes(): Flow<List<FavoriteRecipe>> {
+        return localDataSource.getFavoriteRecipes()
+    }
+
+    override suspend fun insertFavoriteRecipe(recipe: FavoriteRecipe) {
+        localDataSource.insertFavoriteRecipe(recipe)
+    }
+
+    override suspend fun deleteFavoriteRecipe(id: Int) {
+        localDataSource.deleteFavoriteRecipe(id)
     }
 }

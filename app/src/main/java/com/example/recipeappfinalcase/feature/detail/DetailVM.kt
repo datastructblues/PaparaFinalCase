@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipeappfinalcase.data.repository.RecipeRepository
+import com.example.recipeappfinalcase.data.source.local.FavoriteRecipe
 import com.example.recipeappfinalcase.data.source.network.NetworkState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -47,6 +48,20 @@ class DetailVM @Inject constructor(
                     }
                 }
 
+            }
+        }
+    }
+
+    fun addRecipeToFavorites() {
+        viewModelScope.launch(Dispatchers.IO) {
+            uiState.value.recipe?.let { recipe ->
+                val favoriteRecipe = FavoriteRecipe(
+                    id = recipe.id,
+                    title = recipe.title,
+                    image = recipe.image,
+                    summary = recipe.summary
+                )
+                repository.insertFavoriteRecipe(favoriteRecipe)
             }
         }
     }
