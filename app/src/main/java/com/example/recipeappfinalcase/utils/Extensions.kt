@@ -4,8 +4,8 @@ import android.text.Html
 import androidx.compose.foundation.ScrollState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import com.example.recipeappfinalcase.data.model.detail.DetailResponse
+import com.example.recipeappfinalcase.data.source.local.FavoriteRecipe
 
 fun Modifier.parallaxLayoutModifier(scrollState: ScrollState, rate: Int) =
     layout { measurable, constraints ->
@@ -30,4 +30,13 @@ fun String.parseToText(): String {
     }
 
     return formattedText.toString()
+}
+
+fun DetailResponse.toFavoriteRecipe(): FavoriteRecipe {
+    return FavoriteRecipe(
+        id = id,
+        title = title,
+        image = image,
+        summary = summary,
+    )
 }
