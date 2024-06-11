@@ -1,8 +1,13 @@
 package com.example.recipeappfinalcase.feature.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,27 +29,28 @@ fun RecipeItem(
     modifier: Modifier = Modifier,
     recipe : Recipe,
 ) {
-    Surface(
-        shape = MaterialTheme.shapes.medium,
-        color = MaterialTheme.colorScheme.surfaceVariant,
+    Card(
         modifier = Modifier
-    ){
+            .fillMaxWidth()
+            .height(150.dp)
+    ) {
         Column(
-            modifier = Modifier,
+            modifier = Modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
                 model = recipe.image,
                 contentScale = ContentScale.Crop,
                 modifier = modifier
-                    .padding(16.dp)
-                    .clip(CircleShape),
+                    .size(100.dp)
+                    .clip(MaterialTheme.shapes.medium),
                 contentDescription = recipe.title,
             )
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = recipe.title,
                 modifier = Modifier
-                    .padding(16.dp,8.dp),
+                    .padding(4.dp),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 overflow = TextOverflow.Ellipsis,
@@ -53,6 +59,7 @@ fun RecipeItem(
         }
     }
 }
+
 
 
 @Preview(showBackground = true)

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
@@ -18,20 +19,16 @@ import com.example.recipeappfinalcase.feature.ui.theme.RecipeAppFinalCaseTheme
 
 @Composable
 fun ListingComponent(
-    paddingValues: PaddingValues,
     recipes: List<Recipe>,
     onRecipeClick: (Int) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = paddingValues,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
-            .padding(paddingValues)
             .fillMaxSize()
-            .fillMaxHeight()
-            .padding(paddingValues)
+            .padding(16.dp)
     ) {
         items(count = recipes.size) {
             RecipeItem(
@@ -52,7 +49,6 @@ fun ListingComponent(
 fun ListingComponenetPreview() {
     RecipeAppFinalCaseTheme {
         ListingComponent(
-            paddingValues = PaddingValues(16.dp),
             recipes = listOf(
                 Recipe(
                     id = 1,

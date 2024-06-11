@@ -27,26 +27,17 @@ fun Searchbar(
     modifier: Modifier = Modifier,
     viewModel: HomeVM,
 ) {
-    val showBottomSheet = remember { mutableStateOf(false) }
     Column(modifier = Modifier.padding(16.dp)) {
         TextField(
             value = query.value,
             onValueChange = { viewModel.query.value = it },
             maxLines = 1,
             label = { Text("Search Recipes") },
-            trailingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.tune),
-                    contentDescription = "Filter",
-                    modifier = modifier.clickable {
-                        showBottomSheet.value = true
-                    }
-                )
-            },
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(16.dp))
+        val showBottomSheet = remember { mutableStateOf(false) }
         if (showBottomSheet.value) {
             BottomSheet(
                 onDismissRequest = {
