@@ -38,7 +38,10 @@ fun DetailResponse.toFavoriteRecipe(): FavoriteRecipe {
         title = title,
         image = image,
         summary = summary,
+        servings = servings,
+        readyInMinutes = readyInMinutes,
         instructions = instructions,
+        healthScore = healthScore
     )
 }
 
@@ -49,5 +52,8 @@ fun FavoriteRecipe.toDetailResponse(): DetailResponse {
         image = image,
         summary = summary,
         instructions = instructions,
+        readyInMinutes = readyInMinutes,
+        servings = servings,
+        healthScore = healthScore
     )
 }

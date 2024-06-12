@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    /*
     companion object{
         fun enqueueWorker(context: Context){
             val workRequest = PeriodicWorkRequestBuilder<RecipeUpdateWorker>(15, TimeUnit.SECONDS)
@@ -39,19 +40,19 @@ class MainActivity : ComponentActivity() {
         }
 
 
-
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        enqueueWorker(this)
-        checkPermission()
+       // enqueueWorker(this)
+       // checkPermission()
         setContent {
             RecipeAppFinalCaseTheme {
                 AppNavigator()
             }
         }
     }
-
+/*
     private fun checkPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED
@@ -68,4 +69,6 @@ class MainActivity : ComponentActivity() {
         super.onDestroy()
         WorkManager.getInstance(this).cancelAllWork()
     }
+
+ */
 }

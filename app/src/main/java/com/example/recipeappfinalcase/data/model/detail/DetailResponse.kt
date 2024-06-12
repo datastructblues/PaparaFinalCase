@@ -29,7 +29,7 @@ data class DetailResponse(
     @SerializedName("glutenFree")
     val glutenFree: Boolean? = null,
     @SerializedName("healthScore")
-    val healthScore: Int? = null,
+    val healthScore: Int,
     @SerializedName("id")
     val id: Int,
     @SerializedName("image")
@@ -53,9 +53,9 @@ data class DetailResponse(
     @SerializedName("pricePerServing")
     val pricePerServing: Double? = null,
     @SerializedName("readyInMinutes")
-    val readyInMinutes: Int? = null,
+    val readyInMinutes: Int,
     @SerializedName("servings")
-    val servings: Int? = null,
+    val servings: Int,
     @SerializedName("sourceName")
     val sourceName: String? = null,
     @SerializedName("sourceUrl")

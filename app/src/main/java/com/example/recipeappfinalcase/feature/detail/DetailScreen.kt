@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.recipeappfinalcase.feature.ui.theme.RecipeAppFinalCaseTheme
@@ -34,7 +35,7 @@ fun DetailScreen(
             TopAppBar(
                 title = {
                     // title
-                    Text(text = uiState.value.recipe?.title ?: "Recipe Detail")
+                    Text(text = uiState.value.recipe?.title ?: "Recipe Detail", overflow = TextOverflow.Ellipsis, maxLines = 1)
                 },
                 actions = {
                     IconButton(
@@ -74,12 +75,11 @@ fun DetailScreen(
             println("Success")
             uiState.value.recipe?.let { recipe ->
                 println(recipe.title)
-                DetailComponent(paddingValues, recipe)
+                DetailComponent(recipe,paddingValues)
             }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

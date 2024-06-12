@@ -9,5 +9,8 @@ data class FavoriteRecipe(
     val title: String,
     val image: String,
     val summary: String,
-    val instructions: String
+    val servings: Int,
+    val readyInMinutes: Int,
+    val instructions: String,
+    val healthScore: Int
 )
