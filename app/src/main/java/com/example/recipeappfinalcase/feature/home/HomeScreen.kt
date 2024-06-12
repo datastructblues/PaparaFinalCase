@@ -1,6 +1,7 @@
 package com.example.recipeappfinalcase.feature.home
 
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,7 +31,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.recipeappfinalcase.R
 import com.example.recipeappfinalcase.feature.ui.components.BottomSheet
-import com.example.recipeappfinalcase.feature.ui.components.LoadingComponent
+import com.example.recipeappfinalcase.feature.ui.components.AnimatedContent
 import com.example.recipeappfinalcase.feature.ui.components.Searchbar
 
 
@@ -63,9 +64,14 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(paddingValues),
             verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (state.value.isLoading) {
-                LoadingComponent()
+                AnimatedContent(resource = R.raw.loading)
+            } 
+            if(state.value.isError){
+                Image(painter = painterResource(id = R.drawable.wifi), contentDescription = null, alpha = 0.5f)
+                Text("No Internet Connection", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold))
             } else {
                 Row(modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -77,7 +83,7 @@ fun HomeScreen(
                             fontWeight = FontWeight.Bold
                         ),
                         modifier = Modifier
-                            .padding(16.dp,0.dp,0.dp,0.dp)
+                            .padding(16.dp, 0.dp, 0.dp, 0.dp)
                             .weight(1f)
                     )
                     IconButton(

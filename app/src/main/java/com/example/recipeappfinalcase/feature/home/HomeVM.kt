@@ -26,6 +26,7 @@ class HomeVM @Inject constructor(
 
     val query = MutableStateFlow("")
     val cuisine = MutableStateFlow<String?>(null)
+    val diet = MutableStateFlow<String?>(null)
 
 
     init {
@@ -41,6 +42,7 @@ class HomeVM @Inject constructor(
     fun fetchRecipes(
         query: String? = null,
         cuisine: String? = null,
+        diet: String? = null
     ) {
         val internetOnline = true
         viewModelScope.launch {
@@ -48,7 +50,7 @@ class HomeVM @Inject constructor(
                 state.copy(isLoading = true)
             }
             if (internetOnline) {
-                repository.getRecipes(10, 0,query, cuisine).collect { networkState ->
+                repository.getRecipes(10, 0,query, cuisine, diet).collect { networkState ->
                     _uiState.update { state ->
                         when (networkState) {
                             is NetworkState.Loading -> state.copy(isLoading = true)

@@ -50,7 +50,7 @@ fun BottomSheet(
                 viewModel = viewModel,
                 modifier = Modifier.fillMaxSize(),
                 onFilterApplied = {
-                    viewModel.fetchRecipes(query = viewModel.query.value, cuisine = viewModel.cuisine.value?.lowercase())
+                    viewModel.fetchRecipes(query = viewModel.query.value, cuisine = viewModel.cuisine.value?.lowercase(), diet = viewModel.diet.value?.lowercase())
                     onDismissRequest()
                 }
             )
@@ -64,11 +64,13 @@ fun FilterScreen(
     modifier: Modifier = Modifier,
     onFilterApplied: () -> Unit,
 ) {
-    val selectedCategory = viewModel.cuisine.collectAsState()
+    val selectedCuisine = viewModel.cuisine.collectAsState()
+    val selectedDiet = viewModel.diet.collectAsState()
     val cuisines = Filter.cuisines.keys
+    val diets = Filter.diets.keys.toList()
     val scrollState = rememberScrollState()
     val expanded = remember { mutableStateOf(false) }
-    val limit = 8
+    val limit = 2
 
     Column(
         modifier = Modifier
@@ -93,7 +95,7 @@ fun FilterScreen(
                 row.forEach { category ->
                     Categories(
                         category = category,
-                        isSelected = viewModel.cuisine.value == category,
+                        isSelected = selectedCuisine.value == category,
                         onSelectedCategoryChanged = { selected ->
                             viewModel.cuisine.value = if (selected) category else null
                         }
@@ -111,11 +113,32 @@ fun FilterScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Text("Diets", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold))
+        Spacer(modifier = Modifier.height(8.dp))
+
+        val rowsDiets = diets.chunked(2)
+
+        rowsDiets.forEach { row ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                row.forEach { category ->
+                    Categories(
+                        category = category,
+                        isSelected = selectedDiet.value == category, // Use selectedDiet instead of viewModel.diet.value
+                        onSelectedCategoryChanged = { selected ->
+                            viewModel.diet.value = if (selected) category else null
+                        }
+                    )
+                }
+            }
+        }
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Button(onClick = {
                 viewModel.cuisine.value = null
+                viewModel.diet.value = null
                 onFilterApplied()
             }) {
                 Text("Clear")
@@ -124,12 +147,7 @@ fun FilterScreen(
                 Text("Apply")
             }
         }
-
-        Text("Diet", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold))
-        Spacer(modifier = Modifier.height(8.dp))
-
     }
-    println(selectedCategory.value)
 }
 
 @Composable

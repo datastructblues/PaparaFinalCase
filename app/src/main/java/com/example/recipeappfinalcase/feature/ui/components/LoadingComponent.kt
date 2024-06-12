@@ -16,8 +16,9 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.recipeappfinalcase.R
 
 @Composable
-fun LoadingComponent(
-    modifier: Modifier = Modifier
+fun AnimatedContent(
+    modifier: Modifier = Modifier,
+    resource: Int
 ){
     Box(
         contentAlignment = Alignment.Center,
@@ -26,7 +27,7 @@ fun LoadingComponent(
     ) {
         val preloaderLottieComposition by rememberLottieComposition(
             LottieCompositionSpec.RawRes(
-                R.raw.loading
+                resource
             )
         )
 
@@ -40,7 +41,7 @@ fun LoadingComponent(
             composition = preloaderLottieComposition,
             progress = preloaderProgress,
             modifier = modifier
-                .size(100.dp)
+                .size(200.dp)
                 .align(Alignment.Center)
         )
     }
