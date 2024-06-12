@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -52,12 +55,19 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = {
-                Text(text = "Home")
-                Searchbar(query = query, viewModel = viewModel)
-            },
+            TopAppBar(
+                title = {
+                    Searchbar(query = query, viewModel = viewModel)
+                },
+                colors = TopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    scrolledContainerColor = MaterialTheme.colorScheme.background,
+                    navigationIconContentColor = Color.Black,
+                    titleContentColor = Color.Black,
+                    actionIconContentColor = Color.Black,
+                    )
             )
-        }
+        },
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -68,12 +78,20 @@ fun HomeScreen(
         ) {
             if (state.value.isLoading) {
                 AnimatedContent(resource = R.raw.loading)
-            } 
-            if(state.value.isError){
-                Image(painter = painterResource(id = R.drawable.wifi), contentDescription = null, alpha = 0.5f)
-                Text("No Internet Connection", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold))
+            }
+            if (state.value.isError) {
+                Image(
+                    painter = painterResource(id = R.drawable.wifi),
+                    contentDescription = null,
+                    alpha = 0.5f
+                )
+                Text(
+                    "No Internet Connection",
+                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                )
             } else {
-                Row(modifier = Modifier.fillMaxWidth(),
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
@@ -88,7 +106,7 @@ fun HomeScreen(
                     )
                     IconButton(
                         modifier = Modifier
-                            .padding(8.dp,0.dp),
+                            .padding(8.dp, 0.dp),
                         onClick = {
                             showBottomSheet.value = true
                         },

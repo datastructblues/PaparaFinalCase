@@ -5,8 +5,10 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -20,7 +22,6 @@ import com.example.recipeappfinalcase.feature.home.HomeScreen
 import com.example.recipeappfinalcase.feature.navigation.bottombar.BottomBarScreen
 
 
-
 @Composable
 fun AppNavigator() {
     val navController = rememberNavController()
@@ -28,7 +29,10 @@ fun AppNavigator() {
 
     Scaffold(
         bottomBar = {
-            BottomNavigation {
+            BottomNavigation(
+                backgroundColor = MaterialTheme.colorScheme.onSecondary,
+                contentColor = Color.White,
+            ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
                 items.forEach { screen ->
@@ -36,6 +40,8 @@ fun AppNavigator() {
                         icon = {
                             Icon(painterResource(id = screen.icon), contentDescription = screen.title)
                         },
+                        selectedContentColor = Color.White,
+                        unselectedContentColor = Color.Gray,
                         label = { Text(screen.title) },
                         selected = currentRoute == screen.route,
                         onClick = {
