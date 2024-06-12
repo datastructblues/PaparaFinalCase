@@ -5,79 +5,79 @@ import com.google.gson.annotations.SerializedName
 
 data class DetailResponse(
     @SerializedName("aggregateLikes")
-    val aggregateLikes: Int,
+    val aggregateLikes: Int? = null,
     @SerializedName("analyzedInstructions")
-    val analyzedInstructions: List<Any>,
+    val analyzedInstructions: List<Any>? = null,
     @SerializedName("cheap")
-    val cheap: Boolean,
+    val cheap: Boolean? = null,
     @SerializedName("cookingMinutes")
-    val cookingMinutes: Any?,
+    val cookingMinutes: Any? = null,
     @SerializedName("creditsText")
-    val creditsText: String,
+    val creditsText: String? = null,
     @SerializedName("cuisines")
-    val cuisines: List<Any>,
+    val cuisines: List<Any>? = null,
     @SerializedName("dairyFree")
-    val dairyFree: Boolean,
+    val dairyFree: Boolean? = null,
     @SerializedName("diets")
-    val diets: List<Any>,
+    val diets: List<Any>? = null,
     @SerializedName("dishTypes")
-    val dishTypes: List<String>,
+    val dishTypes: List<String>? = null,
     @SerializedName("extendedIngredients")
-    val extendedIngredients: List<ExtendedIngredient>,
+    val extendedIngredients: List<ExtendedIngredient>? = null,
     @SerializedName("gaps")
-    val gaps: String,
+    val gaps: String? = null,
     @SerializedName("glutenFree")
-    val glutenFree: Boolean,
+    val glutenFree: Boolean? = null,
     @SerializedName("healthScore")
-    val healthScore: Int,
+    val healthScore: Int? = null,
     @SerializedName("id")
     val id: Int,
     @SerializedName("image")
     val image: String,
     @SerializedName("imageType")
-    val imageType: String,
+    val imageType: String? = null,
     @SerializedName("instructions")
     val instructions: String,
     @SerializedName("license")
-    val license: String,
+    val license: String? = null,
     @SerializedName("lowFodmap")
-    val lowFodmap: Boolean,
+    val lowFodmap: Boolean? = null,
     @SerializedName("nutrition")
-    val nutrition: Nutrition,
+    val nutrition: Nutrition? = null,
     @SerializedName("occasions")
-    val occasions: List<Any>,
+    val occasions: List<Any>? = null,
     @SerializedName("originalId")
-    val originalId: Any?,
+    val originalId: Any? = null,
     @SerializedName("preparationMinutes")
-    val preparationMinutes: Any?,
+    val preparationMinutes: Any? = null,
     @SerializedName("pricePerServing")
-    val pricePerServing: Double,
+    val pricePerServing: Double? = null,
     @SerializedName("readyInMinutes")
-    val readyInMinutes: Int,
+    val readyInMinutes: Int? = null,
     @SerializedName("servings")
-    val servings: Int,
+    val servings: Int? = null,
     @SerializedName("sourceName")
-    val sourceName: String,
+    val sourceName: String? = null,
     @SerializedName("sourceUrl")
-    val sourceUrl: String,
+    val sourceUrl: String? = null,
     @SerializedName("spoonacularScore")
-    val spoonacularScore: Double,
+    val spoonacularScore: Double? = null,
     @SerializedName("spoonacularSourceUrl")
-    val spoonacularSourceUrl: String,
+    val spoonacularSourceUrl: String? = null,
     @SerializedName("summary")
     val summary: String,
     @SerializedName("sustainable")
-    val sustainable: Boolean,
+    val sustainable: Boolean? = null,
     @SerializedName("title")
     val title: String,
     @SerializedName("vegan")
-    val vegan: Boolean,
+    val vegan: Boolean? = null,
     @SerializedName("vegetarian")
-    val vegetarian: Boolean,
+    val vegetarian: Boolean? = null,
     @SerializedName("veryHealthy")
-    val veryHealthy: Boolean,
+    val veryHealthy: Boolean? = null,
     @SerializedName("veryPopular")
-    val veryPopular: Boolean,
+    val veryPopular: Boolean? = null,
     @SerializedName("weightWatcherSmartPoints")
-    val weightWatcherSmartPoints: Int
+    val weightWatcherSmartPoints: Int? = null
 )

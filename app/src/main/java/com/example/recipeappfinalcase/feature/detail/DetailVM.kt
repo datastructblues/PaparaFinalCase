@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipeappfinalcase.data.repository.RecipeRepository
 import com.example.recipeappfinalcase.data.source.network.NetworkState
+import com.example.recipeappfinalcase.utils.toDetailResponse
 import com.example.recipeappfinalcase.utils.toFavoriteRecipe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +23,7 @@ class DetailVM @Inject constructor(
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(DetailState())
-    val uiState : StateFlow<DetailState> = _uiState
+    val uiState: StateFlow<DetailState> = _uiState
 
     init {
         val recipeId = savedStateHandle.get<Int>("id") ?: 0
@@ -35,19 +36,40 @@ class DetailVM @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.update { it.copy(isLoading = true) }
             repository.getRecipeDetails(recipeId).collect { networkState ->
-                _uiState.update { state ->
-                    when(networkState) {
-                        is NetworkState.Success -> {
-                             state.copy(isLoading = false, isError = false, recipe = networkState.data)
+                when (networkState) {
+                    is NetworkState.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                isError = false,
+                                recipe = networkState.data
+                            )
                         }
-                        is NetworkState.Error -> {
-                            state.copy(isLoading = false, isError = true)
-                        }
-
-                        NetworkState.Loading -> { state.copy(isLoading = true)}
+                    }
+                    is NetworkState.Error -> {
+                        fetchLocalRecipeDetails(recipeId)
+                    }
+                    NetworkState.Loading -> {
+                        _uiState.update { it.copy(isLoading = true) }
                     }
                 }
+            }
+        }
+    }
 
+    private fun fetchLocalRecipeDetails(recipeId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val localRecipe = repository.getLocalRecipeDetails(recipeId)
+            _uiState.update {
+                if (localRecipe != null) {
+                    it.copy(
+                        isLoading = false,
+                        isError = false,
+                        recipe = localRecipe.toDetailResponse()
+                    )
+                } else {
+                    it.copy(isLoading = false, isError = true)
+                }
             }
         }
     }

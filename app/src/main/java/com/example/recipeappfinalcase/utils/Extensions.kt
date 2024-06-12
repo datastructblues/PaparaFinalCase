@@ -38,5 +38,16 @@ fun DetailResponse.toFavoriteRecipe(): FavoriteRecipe {
         title = title,
         image = image,
         summary = summary,
+        instructions = instructions,
+    )
+}
+
+fun FavoriteRecipe.toDetailResponse(): DetailResponse {
+    return DetailResponse(
+        id = id,
+        title = title,
+        image = image,
+        summary = summary,
+        instructions = instructions,
     )
 }

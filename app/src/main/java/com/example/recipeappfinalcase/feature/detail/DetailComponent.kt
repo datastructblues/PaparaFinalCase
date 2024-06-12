@@ -1,5 +1,6 @@
 package com.example.recipeappfinalcase.feature.detail
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.absoluteOffset
@@ -27,32 +28,47 @@ fun DetailComponent(
     recipe: DetailResponse,
 ) {
     val scrollState = rememberScrollState()
-        Column(
+
+    Column(
         modifier = Modifier
             .padding(paddingValues)
             .verticalScroll(scrollState)
             .padding(16.dp)
     ) {
-        AsyncImage(
-            model = recipe.image,
-            contentDescription = recipe.title,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .parallaxLayoutModifier(scrollState, 2)
-                .fillMaxWidth()
-                .absoluteOffset(y = -(scrollState.value * 0.1f).dp)
-                .alpha(min(1f, 1 - (scrollState.value / 600f)))
-        )
-        Text(
-            text = recipe.title,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(top = 16.dp)
-        )
-        Text(
-            text = recipe.instructions.parseToText(),
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(top = 8.dp)
-        )
-            println(recipe.instructions)
+        RecipeImage(recipe.image, recipe.title, scrollState)
+        RecipeTitle(recipe.title)
+        RecipeInstructions(recipe.instructions)
     }
+}
+
+@Composable
+fun RecipeImage(image: String, title: String, scrollState: ScrollState) {
+    AsyncImage(
+        model = image,
+        contentDescription = title,
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier
+            .parallaxLayoutModifier(scrollState, 2)
+            .fillMaxWidth()
+            .absoluteOffset(y = -(scrollState.value * 0.1f).dp)
+            .alpha(min(1f, 1 - (scrollState.value / 600f)))
+    )
+}
+
+@Composable
+fun RecipeTitle(title: String) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.bodyLarge,
+        modifier = Modifier.padding(top = 16.dp)
+    )
+}
+
+@Composable
+fun RecipeInstructions(instructions: String) {
+    Text(
+        text = instructions.parseToText(),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.padding(top = 8.dp)
+    )
 }

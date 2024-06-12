@@ -51,4 +51,9 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun deleteFavoriteRecipe(id: Int) {
         localDataSource.deleteFavoriteRecipe(id)
     }
+
+    override suspend fun getLocalRecipeDetails(id: Int): FavoriteRecipe? {
+        return localDataSource.getFavoriteRecipeById(id)
+    }
+
 }

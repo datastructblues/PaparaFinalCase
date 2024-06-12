@@ -24,4 +24,6 @@ interface RecipeRepository {
     suspend fun insertFavoriteRecipe(recipe: FavoriteRecipe)
 
     suspend fun deleteFavoriteRecipe(id: Int)
+
+    suspend fun getLocalRecipeDetails(id: Int): FavoriteRecipe?
 }

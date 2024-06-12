@@ -1,5 +1,6 @@
 package com.example.recipeappfinalcase.feature.favorite
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,13 +21,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.recipeappfinalcase.data.source.local.FavoriteRecipe
-import com.example.recipeappfinalcase.feature.ui.theme.RecipeAppFinalCaseTheme
 
 @Composable
 fun FavoriteScreen(
@@ -34,7 +33,6 @@ fun FavoriteScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-
     val favoriteState = viewModel.favoriteState.collectAsState()
 
     Scaffold(
@@ -47,7 +45,7 @@ fun FavoriteScreen(
         LazyColumn(contentPadding = paddingValues) {
             favoriteState.value.recipe?.let {
                 items(it) { recipe ->
-                    FavoriteRecipeItem(viewModel, recipe)
+                    FavoriteRecipeItem(viewModel, recipe, navController)
                 }
             }
         }
@@ -58,12 +56,16 @@ fun FavoriteScreen(
 fun FavoriteRecipeItem(
     viewModel: FavoriteVM = hiltViewModel(),
     recipe: FavoriteRecipe,
+    navController: NavHostController,
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
             .padding(8.dp)
+            .clickable {
+                navController.navigate("detail/${recipe.id}")
+            }
     ) {
         Row(
             modifier = Modifier
@@ -89,21 +91,5 @@ fun FavoriteRecipeItem(
                 Icon(Icons.Default.Delete, contentDescription = "Delete")
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun FavoriteScreenPreview() {
-    RecipeAppFinalCaseTheme {
-        FavoriteRecipeItem(
-            recipe =
-            FavoriteRecipe(
-                id = 1,
-                title = "Pasta",
-                image = "https://www.themealdb.com/images/media/meals/58oia61564916529.jpg",
-                summary = "jpg".repeat(100),
-            )
-        )
     }
 }

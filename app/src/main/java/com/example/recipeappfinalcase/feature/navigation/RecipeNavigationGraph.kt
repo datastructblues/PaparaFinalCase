@@ -8,7 +8,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
-
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +20,6 @@ import com.example.recipeappfinalcase.feature.home.HomeScreen
 import com.example.recipeappfinalcase.feature.navigation.bottombar.BottomBarScreen
 
 
-const val KEY_ROUTE = "route_key"
 
 @Composable
 fun AppNavigator() {
@@ -32,7 +30,7 @@ fun AppNavigator() {
         bottomBar = {
             BottomNavigation {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
+                val currentRoute = navBackStackEntry?.destination?.route
                 items.forEach { screen ->
                     BottomNavigationItem(
                         icon = {
@@ -51,23 +49,16 @@ fun AppNavigator() {
             }
         }
     ) { paddingValues ->
-        println(paddingValues)
         NavHost(navController = navController, startDestination = Screen.Home.route) {
             composable(Screen.Home.route) {
                 HomeScreen(navController = navController)
             }
             composable(Screen.Detail.route,
-                arguments = listOf(
-                    navArgument("id") {
-                        type = NavType.IntType
-                    }
-                )
+                arguments = listOf(navArgument("id") { type = NavType.IntType })
             ) { backStackEntry ->
                 val id = backStackEntry.arguments?.getInt("id")
                 if (id != null) {
-                    DetailScreen{
-                        navController.popBackStack()
-                    }
+                    DetailScreen(onBack = { navController.popBackStack() })
                 }
             }
             composable(Screen.Favorite.route) {
