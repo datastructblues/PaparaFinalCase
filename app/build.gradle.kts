@@ -92,6 +92,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.hilt.common)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -131,4 +132,10 @@ dependencies {
 
     // Lottie
     implementation (libs.lottie.compose)
+
+    annotationProcessor("androidx.hilt:hilt-compiler:1.2.0")
+
+    val work_version = "2.9.0"
+    // Kotlin + coroutines
+    implementation("androidx.work:work-runtime-ktx:$work_version")
 }
