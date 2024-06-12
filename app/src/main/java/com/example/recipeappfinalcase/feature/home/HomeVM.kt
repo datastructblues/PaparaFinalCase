@@ -50,7 +50,7 @@ class HomeVM @Inject constructor(
                 state.copy(isLoading = true)
             }
             if (internetOnline) {
-                repository.getRecipes(10, 0,query, cuisine, diet).collect { networkState ->
+                repository.getRecipes(30, 0,query, cuisine, diet).collect { networkState ->
                     _uiState.update { state ->
                         when (networkState) {
                             is NetworkState.Loading -> state.copy(isLoading = true)
